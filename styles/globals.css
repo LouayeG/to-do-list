@@ -1,0 +1,331 @@
+:root{
+  --bg:#1a1a1a;
+  --card:#242424;
+  --muted:#999999;
+  --accent:#2186ff;
+  --accent-light:#4a9fff;
+  --text:#f0f0f0;
+  --danger:#e74c3c;
+  --success:#27ae60;
+  --dark:#121212;
+  --card-border:#333333;
+  --radius:12px;
+}
+
+*{box-sizing:border-box}
+html,body,#__next{height:100%}
+body{
+  margin:0;
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.container{
+  max-width:760px;
+  margin:48px auto;
+  padding:16px;
+  padding-bottom: 70px; /* Added extra padding to account for footer */
+  position:relative;
+  z-index:1;
+}
+
+h1{
+  margin:0 0 24px;
+  font-size:2.4rem;
+  font-weight:600;
+  color: var(--accent-light);
+  letter-spacing: -0.5px;
+}
+
+.todo{
+  background:var(--card);
+  padding:24px;
+  border-radius:var(--radius);
+  border:1px solid var(--card-border);
+  box-shadow:0 8px 30px rgba(0,0,0,0.2);
+  position:relative;
+  overflow:hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.todo:before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:3px;
+  background:var(--accent);
+}
+.todo-form{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+}
+.todo-form input{
+  flex:1;
+  padding:14px;
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,0.05);
+  color:var(--text);
+  font-size:1rem;
+  font-family:'Cairo',sans-serif;
+}
+.todo-form button{
+  padding:14px;
+  border-radius:var(--radius);
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 46px;
+  transition:transform 150ms ease, box-shadow 150ms ease;
+  cursor:pointer;
+}
+
+.todo-form button i {
+  font-size: 16px;
+}
+.todo-form button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  background:var(--accent-light);
+}
+.todo-list{list-style:none;padding:0;margin:0}
+.todo-list li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+  border-radius:var(--radius);
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  position:relative;
+  overflow:hidden;
+  transition:all 200ms ease;
+  box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+.todo-list li + li{margin-top:12px}
+.todo-list li.done{
+  opacity:0.65;
+}
+.todo-list li.done .text{
+  text-decoration:line-through;
+}
+.help{
+  margin-top:16px;
+  color:var(--muted);
+  font-size:0.9rem;
+  font-weight:500;
+}
+
+/* Icon buttons and edit row */
+.actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.icon-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.08);
+  border:none;
+  padding:8px;
+  border-radius:8px;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all 150ms ease;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-btn i {
+  font-size: 14px;
+}
+.icon-btn:hover{
+  background:rgba(33,134,255,0.15);
+  transform:translateY(-1px);
+}
+.icon-btn.edit:hover{color:var(--accent-light)}
+.icon-btn.delete{color:var(--danger)}
+.icon-btn.delete:hover{background:rgba(225,29,72,0.15)}
+.icon-btn.save{color:var(--success)}
+.icon-btn.save:hover{background:rgba(16,185,129,0.15)}
+.icon-btn.cancel{color:var(--muted)}
+
+.edit-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  width:100%;
+}
+.edit-input{
+  flex:1;
+  padding:12px;
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,0.05);
+  color:var(--text);
+  font-family:'Cairo',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+}
+
+/* Drag handle and visuals */
+.todo-list li .left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+}
+
+/* Custom checkbox styling */
+.left label{
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
+.left input[type="checkbox"]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  margin:0;
+  border:2px solid var(--accent-light);
+  position:relative;
+  cursor:pointer;
+  transition: all 0.2s ease;
+}
+.left input[type="checkbox"]:checked{
+  background:var(--accent);
+  border-color:var(--accent);
+}
+.left input[type="checkbox"]:checked:after{
+  content:'✓';
+  position:absolute;
+  color:white;
+  font-size:14px;
+  top:-1px;
+  left:3px;
+}
+
+.drag-handle{
+  background:rgba(255,255,255,0.05);
+  border:none;
+  cursor:grab;
+  padding:8px;
+  border-radius:8px;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 32px;
+  height: 32px;
+}
+
+.drag-handle i {
+  font-size: 14px;
+}
+.drag-handle:active{cursor:grabbing}
+.todo-list li.dragging{
+  opacity:0.7;
+  transform:scale(1.01) rotate(0.5deg);
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  z-index:10;
+}
+.todo-list li.drag-over{
+  background:rgba(33,134,255,0.05);
+  border:1px dashed var(--accent);
+}
+
+.text{
+  margin-left:10px;
+  font-size:1rem;
+  color:var(--text);
+  font-weight:500;
+  letter-spacing:0.2px;
+}
+
+/* Alternating row colors */
+.todo-list li.row-even{
+  background:rgba(33,134,255,0.03);
+  border:1px solid rgba(33,134,255,0.05);
+}
+.todo-list li.row-odd{
+  background:rgba(33,134,255,0.01);
+  border:1px solid rgba(33,134,255,0.03);
+}
+
+/* Footer Styles */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 0;
+  background-color: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 5;
+  border-top: 1px solid rgba(33,134,255,0.3);
+}
+
+.footer-content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer p {
+  font-weight: 500;
+  color: var(--accent-light);
+  margin: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  color: var(--accent-light);
+  font-size: 20px;
+  transition: all 0.2s ease;
+}
+
+.social-links a:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+/* Responsive footer styles */
+@media (max-width: 480px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer p {
+    font-size: 0.9rem;
+  }
+  
+  .social-links {
+    gap: 20px;
+  }
+}
+
+/* Smooth transform transitions (for FLIP) */
+.todo-list li{
+  transition:all 200ms ease, transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
